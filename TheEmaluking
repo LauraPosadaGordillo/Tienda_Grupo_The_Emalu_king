@@ -72,6 +72,77 @@ void registrarGorra() {
             g.tipo = "Curva";
             g.stockMinimo = 3;
     }
+void consultarInventario() {
+    cout << "\n--- INVENTARIO ---\n";
+    if (inventario.empty()) {
+        cout << "No hay gorras registradas.\n";
+        return;
+    }
+    cout << left << setw(8) << "Codigo" << setw(22) << "Nombre"
+         << setw(10) << "Tipo" << setw(12) << "Precio" << "Stock\n";
+    for (int i = 0; i < (int)inventario.size(); i++) {
+        Gorra g = inventario[i];
+        cout << left << setw(8) << g.codigo << setw(22) << g.nombre
+             << setw(10) << g.tipo << "$" << setw(11) << fixed
+             << setprecision(0) << g.precio << g.stock << "\n";
+    }
+}
+
+double aplicarDescuentoEImpuesto(double subtotal, string formaPago) {
+    double total = subtotal;
+
+    if (formaPago == "Efectivo") {
+        total -= total * 0.10;
+        cout << "Descuento por efectivo: 10%\n";
+    } else if (formaPago == "Tarjeta") {
+        total += total * 0.05;
+        cout << "Recargo por tarjeta: 5%\n";
+    } else if (formaPago == "Nequi") {
+        total -= total * 0.05;
+        cout << "Descuento por Nequi: 5%\n";
+    } else {
+        cout << "Sin descuento.\n";
+    }
+
+    if (subtotal > 200000) {
+        total -= 10000;
+        cout << "Promocion: -$10000 por compra mayor a $200000\n";
+    }
+
+    double iva = total * 0.19;
+    cout << "IVA (19%): $" << fixed << setprecision(0) << iva << "\n";
+    return total + iva;
+}
+
+void reporteVentas() {
+    cout << "\n--- REPORTE DE VENTAS ---\n";
+    if (ventas.empty()) {
+        cout << "No se han realizado ventas.\n";
+        return;
+    }
+    double totalVendido = 0;
+    for (int i = 0; i < (int)ventas.size(); i++) {
+        cout << "\nVenta #" << ventas[i].numero << " (" << ventas[i].formaPago << ")\n";
+        for (int j = 0; j < (int)ventas[i].items.size(); j++) {
+            ItemVenta it = ventas[i].items[j];
+            cout << "   " << it.cantidad << " x " << it.nombre << " = $"
+                 << fixed << setprecision(0) << it.subtotal << "\n";
+        }
+        cout << "   Total venta: $" << ventas[i].total << "\n";
+        totalVendido += ventas[i].total;
+    }
+    cout << "\nTOTAL VENDIDO: $" << totalVendido << "\n";
+}
+
+void cargarDatosIniciales() {
+    inventario.push_back({101, "New Era Yankees", 120000, 10, "Plana", 5});
+    inventario.push_back({102, "Nike Classic", 85000, 6, "Curva", 3});
+    inventario.push_back({103, "Trucker Malla Negra", 45000, 8, "Trucker", 4});
+    inventario.push_back({104, "Adidas Basica", 60000, 4, "Curva", 3});
+}
+
+
+
     inventario.push_back(g);
     cout << "Gorra registrada correctamente.\n";
 }
