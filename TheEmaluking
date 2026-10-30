@@ -147,3 +147,94 @@ void cargarDatosIniciales() {
     cout << "Gorra registrada correctamente.\n";
 }
 
+void registrarVenta() {
+    if (inventario.empty()) {
+        cout << "\nNo hay gorras para vender.\n";
+        return;
+    }
+    Venta v;
+    v.numero = contadorVentas;
+    double subtotal = 0;
+    char otra = 's';
+
+    cout << "\n--- REGISTRAR VENTA #" << v.numero << " ---\n";
+    while (otra == 's' || otra == 'S') {
+        int codigo, cantidad;
+        consultarInventario();
+        cout << "\nCodigo de la gorra: ";
+        cin >> codigo;
+        int pos = buscarGorra(codigo);
+
+        if (pos == -1) {
+            cout << "Codigo no encontrado.\n";
+        } else {
+            cout << "Cantidad: ";
+            cin >> cantidad;
+            if (cantidad <= 0 || cantidad > inventario[pos].stock) {
+                cout << "Cantidad no valida o stock insuficiente.\n";
+            } else {
+                ItemVenta item;
+                item.nombre = inventario[pos].nombre;
+                item.cantidad = cantidad;
+                item.subtotal = inventario[pos].precio * cantidad;
+                v.items.push_back(item);
+                subtotal += item.subtotal;
+
+                inventario[pos].stock -= cantidad;
+
+                if (inventario[pos].stock < inventario[pos].stockMinimo)
+                    cout << "*** ALERTA: '" << inventario[pos].nombre
+                         << "' quedo con " << inventario[pos].stock
+                         << " unidades ***\n";
+            }
+        }
+        cout << "Agregar otra gorra? (s/n): ";
+        cin >> otra;
+    }
+
+    if (v.items.empty()) {
+        cout << "Venta cancelada (sin productos).\n";
+        return;
+    }
+
+    int opPago;
+    cout << "\nForma de pago (1. Efectivo  2. Tarjeta  3. Nequi): ";
+    cin >> opPago;
+    if (opPago == 1)      v.formaPago = "Efectivo";
+    else if (opPago == 2) v.formaPago = "Tarjeta";
+    else if (opPago == 3) v.formaPago = "Nequi";
+    else                  v.formaPago = "Otro";
+
+    cout << "\nSubtotal: $" << fixed << setprecision(0) << subtotal << "\n";
+    v.total = aplicarDescuentoEImpuesto(subtotal, v.formaPago);
+    cout << "TOTAL A PAGAR: $" << v.total << "\n";
+
+    ventas.push_back(v);
+    contadorVentas++;
+    cout << "Venta registrada.\n";
+}
+
+int main() {
+    cargarDatosIniciales();
+    int opcion;
+    do {
+        cout << "\n====== TIENDA DE GORRAS ======\n";
+        cout << "1. Registrar gorra\n";
+        cout << "2. Consultar inventario\n";
+        cout << "3. Registrar venta\n";
+        cout << "4. Reporte de ventas\n";
+        cout << "0. Salir\n";
+        cout << "Opcion: ";
+        cin >> opcion;
+
+        switch (opcion) {
+            case 1: registrarGorra(); pausa(); break;
+            case 2: consultarInventario(); pausa(); break;
+            case 3: registrarVenta(); pausa(); break;
+            case 4: reporteVentas(); pausa(); break;
+            case 0: cout << "Hasta luego!\n"; break;
+            default: cout << "Opcion no valida.\n";
+        }
+    } while (opcion != 0);
+    return 0;
+}
