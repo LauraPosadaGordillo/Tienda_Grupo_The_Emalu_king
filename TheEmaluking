@@ -1,1 +1,78 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <iomanip>
+using namespace std;
+
+struct Gorra {
+    int codigo;
+    string nombre;
+    double precio;
+    int stock;
+    string tipo;
+    int stockMinimo;
+};
+
+struct ItemVenta {
+    string nombre;
+    int cantidad;
+    double subtotal;
+};
+
+struct Venta {
+    int numero;
+    vector<ItemVenta> items;
+    string formaPago;
+    double total;
+};
+
+vector<Gorra> inventario;
+vector<Venta> ventas;
+int contadorVentas = 1;
+
+int buscarGorra(int codigo) {
+    for (int i = 0; i < (int)inventario.size(); i++)
+        if (inventario[i].codigo == codigo) return i;
+    return -1;
+}
+
+void pausa() {
+    cout << "\nPresione ENTER para continuar...";
+    cin.ignore();
+    cin.get();
+}
+
+void registrarGorra() {
+    Gorra g;
+    int opcionTipo;
+
+    cout << "\n--- REGISTRAR GORRA ---\n";
+    cout << "Codigo: ";
+    cin >> g.codigo;
+    if (buscarGorra(g.codigo) != -1) {
+        cout << "Ya existe una gorra con ese codigo.\n";
+        return;
+    }
+    cout << "Nombre: ";
+    cin.ignore();
+    getline(cin, g.nombre);
+    cout << "Precio: ";
+    cin >> g.precio;
+    cout << "Stock: ";
+    cin >> g.stock;
+    cout << "Tipo (1. Plana  2. Curva  3. Trucker): ";
+    cin >> opcionTipo;
+
+    switch (opcionTipo) {
+        case 1:  g.tipo = "Plana";   g.stockMinimo = 5; break;
+        case 2:  g.tipo = "Curva";   g.stockMinimo = 3; break;
+        case 3:  g.tipo = "Trucker"; g.stockMinimo = 4; break;
+        default:
+            cout << "Tipo no valido. Se registra como Curva.\n";
+            g.tipo = "Curva";
+            g.stockMinimo = 3;
+    }
+    inventario.push_back(g);
+    cout << "Gorra registrada correctamente.\n";
+}
 
