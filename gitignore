@@ -1,0 +1,27 @@
+# Ejecutables
+*.exe
+*.out
+*.app
+tienda_v0
+tienda_v1
+main
+
+# Archivos objeto y de compilacion
+*.o
+*.obj
+*.d
+Debug/
+Release/
+build/
+
+# Archivos temporales de ZinjaI / IDEs
+*.zpr
+*.layout
+*.depend
+.vscode/
+.idea/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+*~
