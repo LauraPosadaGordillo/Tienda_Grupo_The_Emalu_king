@@ -1,0 +1,116 @@
+SALIDA ESPERADA - ESCENARIO: REGISTRAR UNA VENTA (version 1)
+
+Compilacion: g++ -std=c++11 v1/main.cpp -o tienda_v1
+Escenario:
+  1. Consultar el inventario inicial (opcion 2).
+  2. Registrar una venta (opcion 3) con 2 x Gorra New Era Yankees (codigo 101)
+     y 1 x Medias Adidas x3 (codigo 202), pagando con Nequi.
+  3. Ver el reporte de ventas (opcion 4) y salir (opcion 0).
+
+Calculo esperado del total (Decorator + Strategy):
+  Subtotal            240000 + 30000          = $270000
+  Nequi (-5%)         270000 x 0.95           = $256500
+  Promocion (> $200000) 256500 - 10000        = $246500
+  IVA (19%)           246500 x 0.19           = $46835
+  Total               246500 + 46835          = $293335
+
+Lo que escribe el usuario aparece justo despues de cada pregunta.
+------------------------------------------------------------------
+
+=== TIENDA DE GORRAS Y ACCESORIOS ===
+1. Registrar producto
+2. Consultar inventario
+3. Registrar venta
+4. Reporte de ventas
+0. Salir
+Opcion: 2
+
+--- INVENTARIO ---
+Codigo  Nombre                  Categoria  Detalle             Precio    Stock
+101     Gorra New Era Yankees   Accesorio  Algodon             $120000   10
+102     Canguro Nike            Accesorio  Poliester           $75000    5
+201     Camisa Oversize         Ropa       Talla M             $65000    8
+202     Medias Adidas x3        Ropa       Talla Unica         $30000    6
+301     Reloj Casio             Reloj      Garantia 12 meses   $180000   3
+401     Colonia Hugo Boss       Colonia    100 ml              $210000   4
+
+Presione ENTER para continuar...
+
+=== TIENDA DE GORRAS Y ACCESORIOS ===
+1. Registrar producto
+2. Consultar inventario
+3. Registrar venta
+4. Reporte de ventas
+0. Salir
+Opcion: 3
+
+--- REGISTRAR VENTA #1 ---
+
+--- INVENTARIO ---
+Codigo  Nombre                  Categoria  Detalle             Precio    Stock
+101     Gorra New Era Yankees   Accesorio  Algodon             $120000   10
+102     Canguro Nike            Accesorio  Poliester           $75000    5
+201     Camisa Oversize         Ropa       Talla M             $65000    8
+202     Medias Adidas x3        Ropa       Talla Unica         $30000    6
+301     Reloj Casio             Reloj      Garantia 12 meses   $180000   3
+401     Colonia Hugo Boss       Colonia    100 ml              $210000   4
+
+Codigo del producto: 101
+Cantidad: 2
+Agregar otro producto? (s/n): s
+
+--- INVENTARIO ---
+Codigo  Nombre                  Categoria  Detalle             Precio    Stock
+101     Gorra New Era Yankees   Accesorio  Algodon             $120000   8
+102     Canguro Nike            Accesorio  Poliester           $75000    5
+201     Camisa Oversize         Ropa       Talla M             $65000    8
+202     Medias Adidas x3        Ropa       Talla Unica         $30000    6
+301     Reloj Casio             Reloj      Garantia 12 meses   $180000   3
+401     Colonia Hugo Boss       Colonia    100 ml              $210000   4
+
+Codigo del producto: 202
+Cantidad: 1
+Agregar otro producto? (s/n): n
+
+Forma de pago:
+  1. Efectivo
+  2. Tarjeta
+  3. Nequi
+Opcion: 3
+
+Subtotal: $270000
+Descuento por Nequi (5%): $256500
+Promocion compra mayor a $200000 (-$10000): $246500
+IVA (19%): $46835
+TOTAL A PAGAR: $293335
+Venta registrada.
+
+Presione ENTER para continuar...
+
+=== TIENDA DE GORRAS Y ACCESORIOS ===
+1. Registrar producto
+2. Consultar inventario
+3. Registrar venta
+4. Reporte de ventas
+0. Salir
+Opcion: 4
+
+--- REPORTE DE VENTAS ---
+
+Venta #1 (Nequi)
+   2 x Gorra New Era Yankees = $240000
+   1 x Medias Adidas x3 = $30000
+   Total venta: $293335
+
+TOTAL VENDIDO: $293335
+
+Presione ENTER para continuar...
+
+=== TIENDA DE GORRAS Y ACCESORIOS ===
+1. Registrar producto
+2. Consultar inventario
+3. Registrar venta
+4. Reporte de ventas
+0. Salir
+Opcion: 0
+Hasta luego!
